@@ -4,8 +4,10 @@ export interface CreatePost {
   direction: string;
   address: string;
   acreage: string;
+  bathroom: string;
+  bedroom: string;  
   price: string;
-  file: any;
+  files: any;
   categoryId: string;
 }
 export interface QueryPost {

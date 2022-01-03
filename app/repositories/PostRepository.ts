@@ -4,18 +4,24 @@ import { CreatePost, QueryPost } from "../interfaces/post-interface";
 import Post, { PostDocument, POST_STATUS } from "../models/Post";
 
 class PostRepository {
-  async createPost(newPost: CreatePost): Promise<PostDocument> {
-    const { file, ...body } = newPost;
+  async createPost(newPost: CreatePost): Promise<any> {
+    const { files, ...body } = newPost;
+    console.log(files)
     let result;
-    if (file) {
-      result = await cloudinary.uploader.upload(file.path, {
+    const listFilesPost = files.map(async (file: any)=> {
+      return cloudinary.uploader.upload(file.path, {
         resource_type: "auto",
       });
+    })
+    if (files.length > 0) {
+      result = await Promise.all(listFilesPost)
     }
-    console.log(result);
+    const images = result?.map(file => file.secure_url);
+    // console.log(result);
+    console.log(images);
     return await Post.create({
       ...body,
-      image: result ? result.secure_url : null,
+      images: result ? images : null,
     });
   }
   async deletePost(id: string): Promise<PostDocument> {

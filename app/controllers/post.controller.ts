@@ -38,13 +38,14 @@ class PostController {
   }
   async create(req: any, res: Response, next: NextFunction) {
     const createPost: CreatePost = req.body;
-    const file = req.file;
+    const files = req.files;
     try {
       const response = await PostRepository.createPost({
-        ...createPost, file
+        ...createPost, files
       });
       return res.json(response)
     } catch (error) {
+      console.log(error)
       next(createError(400, "Create failure"));
     }
   }

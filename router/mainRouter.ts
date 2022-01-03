@@ -9,7 +9,7 @@ router.get("/posts/:id", PostController.detail);
 router.get("/posts", PostController.index);
 router.post(
   "/posts",
-  multer.single("image"),
+  multer.array('images') ,
   validatePost,
   PostController.create
 );

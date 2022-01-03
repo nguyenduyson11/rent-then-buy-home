@@ -11,8 +11,10 @@ const PostSchema = new Schema(
     direction: { type: String },
     address: { type: String, required: true },
     acreage: { type: String, required: true },
+    bedroom: {type: Number},
+    bathroom: {type: Number},
     price: { type: String, required: true },
-    image: { type: String },
+    images: { type: Array },
     status: {
       type: String,
       enum: Object.values(POST_STATUS),
